@@ -4,7 +4,7 @@ export const useValidation = (fields) => {
 	const initialFields = fields.reduce(
 		(state, fieldName) => ({
 			...state,
-			[fieldName]: '',
+			[fieldName]: fieldName.includes('file') ? null : '',
 			[`${fieldName}Error`]: true,
 			[`${fieldName}Msg`]: '',
 		}),
