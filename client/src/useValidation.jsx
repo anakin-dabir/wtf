@@ -29,16 +29,19 @@ export const useValidation = (fields) => {
 	};
 
 	const handleChange = (e) => {
-		const { name, value } = e.target;
+		const { name, value, files } = e.target;
 		const error = validateForm(name, value);
 		setformData((prev) => ({
 			...prev,
-			[name]: value,
+			[name]: name.includes('file') ? files[0] : value,
 			[`${name}Error`]: error,
 			[`${name}Msg`]: error
-				? `${name.charAt(0).toUpperCase() + name.slice(1)} is invalid`
+				? name.includes('file')
+					? 'No File Chosen'
+					: `${name.charAt(0).toUpperCase() + name.slice(1)} is invalid`
 				: '',
 		}));
+		console.log(formData);
 	};
 
 	const clearFormData = () => {

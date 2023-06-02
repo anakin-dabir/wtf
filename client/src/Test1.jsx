@@ -11,7 +11,7 @@ const Test1 = () => {
 	const socket = useStore((state) => state.socket);
 	const [isPending, setIsPending] = useState(false);
 	const { formData, handleChange, btnDisable, clearFormData } = useValidation([
-		'name',
+		'file',
 		'email',
 	]);
 
@@ -25,6 +25,10 @@ const Test1 = () => {
 			setIsPending(false);
 			clearFormData();
 			socket.emit('formData', formData);
+			const formInput = new FormData();
+			formInput.append('image', formData.file);
+			formInput.append('email', formData.email);
+			console.log(formInput);
 			socket.on('res:formData', (formData) => {
 				setNotification(`This is the new message from ${formData._id}`);
 			});
@@ -46,12 +50,13 @@ const Test1 = () => {
 
 			<Modal
 				id='modal_1'
+				encType={true}
 				submitF={submitF}>
 				<FormInput
 					onChange={handleChange}
-					name={'name'}
+					name={'file'}
 					formData={formData}
-					type='name'
+					type='file'
 					error={false}
 					margin='mt-4'
 				/>
@@ -75,6 +80,8 @@ const Test1 = () => {
 				data={notification}
 				setData={setNotification}
 			/>
+			<br />
+			<br />
 		</>
 	);
 };

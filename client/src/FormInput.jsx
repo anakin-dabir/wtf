@@ -24,13 +24,14 @@ const FormInput = ({
 					<>
 						<label className='label'>{label}</label>
 						{type !== 'textarea' ? (
-							<input
-								type={type}
-								onChange={onChange}
-								value={value}
-								placeholder={`Enter ${label}`}
-								name={name}
-								className={`input focus:outline-none w-full
+							type !== 'file' ? (
+								<input
+									type={type}
+									onChange={onChange}
+									value={value}
+									placeholder={`Enter ${label}`}
+									name={name}
+									className={`input focus:outline-none w-full
                     ${
 											style
 												? 'border-0 border-b-2 border-b-primary'
@@ -43,7 +44,23 @@ const FormInput = ({
 												: 'border-b-error focus:border-error border-error'
 										}
                     `}
-							/>
+								/>
+							) : (
+								<input
+									type='file'
+									onChange={onChange}
+									name={name}
+									className={`file-input file-input-bordered w-full
+                    
+
+                    ${
+											errorMsg === ''
+												? ''
+												: 'border-b-error focus:border-error border-error'
+										}
+                    `}
+								/>
+							)
 						) : (
 							<textarea
 								onChange={onChange}

@@ -3,6 +3,7 @@ const Modal = ({
 	children,
 	width = 'max-w-sm',
 	style = 'modal-middle',
+	encType = false,
 }) => {
 	return (
 		<dialog
@@ -10,6 +11,7 @@ const Modal = ({
 			className={`modal ${style}`}>
 			<form
 				method='dialog'
+				encType={`${encType ? 'multipart/form-data' : ''}`}
 				className={`modal-box ${width}`}>
 				<button
 					htmlFor={id}
