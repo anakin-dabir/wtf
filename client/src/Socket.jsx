@@ -25,7 +25,7 @@ const Socket = () => {
 			socket.disconnect();
 		};
 	}, [isLogin]);
-	return <div>Socket</div>;
+	return null;
 };
 
 export default Socket;

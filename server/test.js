@@ -31,3 +31,16 @@ const validateForm = (name, value) => {
 };
 
 console.log(validateForm('email', 'anakingma@il.com'));
+
+function isInputValid(inputText) {
+	const regexPattern = /^[a-zA-Z0-9!@'/"\\|*_-]+$/;
+
+	return regexPattern.test(inputText);
+}
+
+// Example usage
+const userInput1 = 'Hello123!@"/|*_-';
+console.log(isInputValid(userInput1)); // Output: true
+
+const userInput2 = 'Testing<>123';
+console.log(isInputValid(userInput2)); // Output: false

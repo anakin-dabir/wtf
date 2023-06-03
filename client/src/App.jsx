@@ -15,6 +15,7 @@ import { Toaster } from 'react-hot-toast';
 import { useStore } from './Store';
 const Test1 = React.lazy(() => import('./Test1'));
 import Socket from './Socket';
+import Login from './Login';
 
 const LocationProtectedRoute = () => {
 	const isLogin = useStore((state) => state.login);
@@ -59,45 +60,43 @@ const App = () => {
 						className: 'shadow-lg lg:mr-10 p-3.5 text-lg',
 					}}
 				/>
-				<NavBar />
+				{/* <NavBar /> */}
 				<Socket />
-				<div className='mt-24 container mx-auto lg:max-w-screen-xl'>
-					<Routes>
+				<Routes>
+					<Route
+						path='/'
+						element={<div>Home</div>}
+					/>
+					<Route element={<ProtectedRoute />}>
 						<Route
-							path='/'
-							element={<div>Home</div>}
+							path='/test'
+							element={<Test />}
 						/>
-						<Route element={<ProtectedRoute />}>
-							<Route
-								path='/test'
-								element={<Test />}
-							/>
-							<Route
-								path='/testt'
-								element={
-									<Suspense fallback={'Loading...'}>
-										<Test1 />
-									</Suspense>
-								}
-							/>
-						</Route>
-						<Route element={<LoginProtectedRoute />}>
-							<Route
-								path='/login'
-								element={<div>Login Here...</div>}
-							/>
-						</Route>
 						<Route
-							path='*'
-							element={<div>404 Error...</div>}
+							path='/testt'
+							element={
+								<Suspense fallback={'Loading...'}>
+									<Test1 />
+								</Suspense>
+							}
 						/>
-					</Routes>
-					<button
-						className='mt-14 btn btn-primary btn-wide'
-						onClick={setLogin}>
-						Login ??
-					</button>
-				</div>
+					</Route>
+					<Route element={<LoginProtectedRoute />}>
+						<Route
+							path='/login'
+							element={<Login />}
+						/>
+					</Route>
+					<Route
+						path='*'
+						element={<div>404 Error...</div>}
+					/>
+				</Routes>
+				<button
+					className='mt-14 btn btn-primary btn-wide'
+					onClick={setLogin}>
+					Login ??
+				</button>
 			</BrowserRouter>
 		</>
 	);

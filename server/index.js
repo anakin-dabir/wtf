@@ -77,9 +77,9 @@ io.on('connection', async (socket) => {
 	});
 });
 
-// app.use('/', (req, res) => {
-// 	res.send('This is server...');
-// });
+app.use('/', (req, res) => {
+	res.send('This is server...');
+});
 
 // __test
 app.get('/getF', (req, res) => {

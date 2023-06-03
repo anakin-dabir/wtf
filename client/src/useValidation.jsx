@@ -21,10 +21,9 @@ export const useValidation = (fields) => {
 				return !isValid;
 
 			default:
-				if (!value || value === '') {
-					return true;
-				}
-				return false;
+				if (!value || value === '') return true;
+				const regexPattern = /^[a-zA-Z0-9!@'/"\\|*_.,-]+$/;
+				return !regexPattern.test(value);
 		}
 	};
 

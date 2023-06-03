@@ -6,6 +6,7 @@ import Modal from './Modal';
 import { useStore } from './Store';
 import SideBar from './SideBar';
 import toast from 'react-hot-toast';
+import Avatar from './Avatar';
 
 const Test1 = () => {
 	const socket = useStore((state) => state.socket);
@@ -80,6 +81,14 @@ const Test1 = () => {
 				data={notification}
 				setData={setNotification}
 			/>
+			<br />
+			<br />
+			<div className='text-center'>
+				<Avatar
+					width='w-16'
+					url='https://upload.wikimedia.org/wikipedia/commons/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg'
+				/>
+			</div>
 			<br />
 			<br />
 		</>
