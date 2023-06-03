@@ -8,6 +8,7 @@ import { Server } from 'socket.io';
 import multer from 'multer';
 import connectDb from './db.js';
 import Stripe from 'stripe';
+import userRouter from './routes/Users.js';
 
 dotenv.config();
 const app = express();
@@ -77,61 +78,62 @@ io.on('connection', async (socket) => {
 	});
 });
 
-app.use('/', (req, res) => {
-	res.send('This is server...');
-});
+// app.use('/', (req, res) => {
+// 	res.send('This is server...');
+// });
+
+// __ NEW
+app.use('/auth', userRouter);
 
 // __test
 app.get('/getF', (req, res) => {
-	const jwt = req.cookies.auth;
-	console.log(jwt);
 	const body = {
 		name: 'Anakin',
 		id: 123,
 	};
-	return res.status(400).json({ body });
+	return res.status(200).json({ body });
 });
-app.post('/getF', upload, (req, res) => {
-	console.log(req.body);
-	const jwt = req.cookies.auth;
-	console.log(jwt);
-	return res
-		.status(200)
-		.json({ body: req.body, msg: 'Login & Registeration Successful' });
-});
+// app.post('/getF', upload, (req, res) => {
+// 	console.log(req.body);
+// 	const jwt = req.cookies.auth;
+// 	console.log(jwt);
+// 	return res
+// 		.status(200)
+// 		.json({ body: req.body, msg: 'Login & Registeration Successful' });
+// });
 
 // __stripe
-const stripe = new Stripe(
-	'sk_test_51IfPckI9Cx0UeZSmapKoMoaL4ro0Nk7zRpiI8jlUjwCMHUIF5SJ836Ma31Xv7WdB7Lb25NjzQP3krHqi7oe6wjsk001G51IKdF',
-	{
-		maxNetworkRetries: 2,
-	}
-);
-app.post('/create-checkout-session', async (req, res) => {
-	const { checkoutItems } = req.body;
-	try {
-		const session = await stripe.checkout.sessions.create({
-			payment_method_types: ['card'],
-			line_items: checkoutItems.map((item) => ({
-				price_data: {
-					currency: 'usd',
-					product_data: {
-						name: item.name,
-					},
-					unit_amount: item.price,
-				},
-				quantity: item.quantity,
-			})),
-			mode: 'payment',
-			success_url: `${process.env.CLIENT}/success`,
-			cancel_url: `${process.env.CLIENT}/cancel`,
-		});
-		return res.json({ url: session.url });
-	} catch (err) {
-		console.log(err);
-		return res.status(500).json({ msg: 'Checkout Error' });
-	}
-});
+// const stripe = new Stripe(
+// 	'sk_test_51IfPckI9Cx0UeZSmapKoMoaL4ro0Nk7zRpiI8jlUjwCMHUIF5SJ836Ma31Xv7WdB7Lb25NjzQP3krHqi7oe6wjsk001G51IKdF',
+// 	{
+// 		maxNetworkRetries: 2,
+// 	}
+// );
+// app.post('/create-checkout-session', async (req, res) => {
+// 	const { checkoutItems } = req.body;
+// 	try {
+// 		const session = await stripe.checkout.sessions.create({
+// 			payment_method_types: ['card'],
+// 			line_items: checkoutItems.map((item) => ({
+// 				price_data: {
+// 					currency: 'usd',
+// 					product_data: {
+// 						name: item.name,
+// 					},
+// 					unit_amount: item.price,
+// 				},
+// 				quantity: item.quantity,
+// 			})),
+// 			mode: 'payment',
+// 			success_url: `${process.env.CLIENT}/success`,
+// 			cancel_url: `${process.env.CLIENT}/cancel`,
+// 		});
+// 		return res.json({ url: session.url });
+// 	} catch (err) {
+// 		console.log(err);
+// 		return res.status(500).json({ msg: 'Checkout Error' });
+// 	}
+// });
 
 // __connections
 connectDb(process.env.MONGOD_URL);

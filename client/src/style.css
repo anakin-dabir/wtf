@@ -42,10 +42,14 @@ form {
 form.sign-up-form {
   opacity: 0;
   z-index: 1;
+  transition: transform 0.9s ease-in-out;
+  transition-delay: 0.6s;
 }
 
 form.sign-in-form {
   z-index: 2;
+  transition: transform 0.9s ease-in-out;
+  transition-delay: 0.6s;
 }
 
 

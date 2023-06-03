@@ -16,6 +16,7 @@ import { useStore } from './Store';
 const Test1 = React.lazy(() => import('./Test1'));
 import Socket from './Socket';
 import Login from './Login';
+import Otp from './Otp';
 
 const LocationProtectedRoute = () => {
 	const isLogin = useStore((state) => state.login);
@@ -85,6 +86,10 @@ const App = () => {
 						<Route
 							path='/login'
 							element={<Login />}
+						/>
+						<Route
+							path='/login/:email/:id'
+							element={<Otp />}
 						/>
 					</Route>
 					<Route

@@ -35,7 +35,7 @@ const FormInput = ({
                     ${
 											style
 												? 'border-0 border-b-2 border-b-primary'
-												: 'border-opacity-40  focus:border-opacity-100 focus:border-primary'
+												: 'border-opacity-70  focus:border-opacity-100 focus:border-primary'
 										} 
 
                     ${

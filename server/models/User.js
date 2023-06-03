@@ -4,6 +4,11 @@ const UserSchema = new mongoose.Schema(
 	{
 		name: String,
 		email: { type: String, unique: true },
+		about: { type: String, default: '' },
+		interest: {
+			type: [{ type: String }],
+			default: [],
+		},
 	},
 	{
 		collection: 'User',

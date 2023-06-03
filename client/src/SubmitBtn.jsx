@@ -9,12 +9,16 @@ const SubmitBtn = ({
 	dots = false,
 	onSubmit = null,
 	margin = '',
+	onClick = false,
+	disableF = false,
 }) => {
-	return !disable() ? (
+	return disableF ? (
+		disable
+	) : !disable() ? (
 		!isPending ? (
 			<button
 				onClick={onSubmit}
-				type='submit'
+				type={`${onClick ? '' : 'submit'}`}
 				className={`btn btn-primary ${margin} ${width} ${
 					outline ? 'btn-outline' : ''
 				}`}>

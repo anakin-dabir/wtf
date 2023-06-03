@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import log from './img/log.svg';
 import reg from './img/register.svg';
 import { useStore } from './Store';
+import Register from './Register';
 
 const Login = () => {
 	const [register, setRegister] = useState(false);
@@ -20,8 +21,13 @@ const Login = () => {
 			}  container1 bg-base-100 ${register ? 'sign-up-mode' : ''}`}>
 			<div className='forms-container '>
 				<div className='signin-signup bg-base-100'>
-					<form className='sign-in-form'></form>
-					<form className='sign-up-form'></form>
+					{register ? (
+						<div className='sign-up-form max-w-lg  md:max-w-xl'>
+							<Register />
+						</div>
+					) : (
+						<div className='sign-in-form'></div>
+					)}
 				</div>
 			</div>
 
