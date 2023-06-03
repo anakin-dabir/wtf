@@ -1,31 +1,60 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 // import Logout from '../Login-Form/Logout';
 // import MyAwesomeThemeComponent from '../ThemeToggle/toggle';
 
 const NavBar = () => {
 	const [prevScrollPos, setPrevScrollPos] = useState(0);
 	const [visible, setVisible] = useState(true);
-	const [top, setTop] = useState(true);
+	const [pathHide, setpathHide] = useState(false);
+	const location = useLocation();
+	const navRef = useRef(null);
+
 	const handleScroll = () => {
 		const currentScrollPos = window.pageYOffset;
-		if (currentScrollPos === 0) {
-			setTop(true);
-		} else {
-			setTop(false);
-		}
 		setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
 		setPrevScrollPos(currentScrollPos);
 	};
+	const handleMouse = (e) => {
+		const { clientX, clientY } = e;
+		// const isMatchingPath = paths.some((path) => {
+		// 	return location.pathname.startsWith(path);
+		// });
+
+		if (navRef.current && navRef.current.contains(e.target)) {
+			setpathHide(false);
+		} else {
+			setpathHide(clientY > 10);
+		}
+	};
+
+	useEffect(() => {
+		if (location.pathname === '/login') {
+			setpathHide(true);
+		} else {
+			setpathHide(false);
+		}
+	}, [location]);
+
 	useEffect(() => {
 		window.addEventListener('scroll', handleScroll);
-		return () => window.removeEventListener('scroll', handleScroll);
-	}, [prevScrollPos, visible, handleScroll]);
+		if (location.pathname === '/login') {
+			window.addEventListener('mousemove', handleMouse);
+		}
+
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+			window.removeEventListener('mousemove', handleMouse);
+		};
+	}, [prevScrollPos, pathHide, visible]);
 
 	return (
 		<div
-			className={`fixed w-full text-base-content z-50  backdrop-blur-md bg-base-100 bg-opacity-10 transition duration-300 ease-in-out
+			ref={navRef}
+			className={`fixed ${
+				pathHide ? 'hidden' : ''
+			} w-full text-base-content z-50  backdrop-blur-md bg-base-100 bg-opacity-10 transition duration-300 ease-in-out
 			 shadow-md   ${visible ? 'top-0' : '-top-full'}`}>
 			<div className='navbar px-3 container mx-auto lg:max-w-screen-xl'>
 				<div className='text-2xl font-bold navbar-start'>DaisyUI</div>

@@ -60,7 +60,7 @@ const App = () => {
 						className: 'shadow-lg lg:mr-10 p-3.5 text-lg',
 					}}
 				/>
-				{/* <NavBar /> */}
+				<NavBar />
 				<Socket />
 				<Routes>
 					<Route
